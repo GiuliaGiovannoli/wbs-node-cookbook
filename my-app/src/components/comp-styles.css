@@ -1,0 +1,73 @@
+h4, h5, h6, p, #recipeText {
+    font-family: 'Roboto', sans-serif !important;
+    color: #282c34 !important;
+    font-size: 1,5em !important;
+}
+
+h1, h2, span.MuiTypography-root {
+    font-family: "Rock Salt", cursive !important;
+    color: rgb(209, 37, 37) !important;
+}
+
+a.link {
+    font-family: 'Roboto', sans-serif !important;
+    
+}
+
+#collection, .categories {
+    display: flex;
+    flex-wrap: wrap;
+    justify-items: center;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+}
+
+#card {
+    width: 30%;
+    text-align: center;
+}
+
+#collection, #card {
+    background-color: lightgray;
+}
+
+#recipe {
+    border: 2px solid rgb(209, 37, 37);
+}
+
+#recipeGrid {
+    background-color:lightgray;
+}
+
+#recipeCard {
+    background-color: white;
+    border: 2px solid rgb(209, 37, 37);
+    width: 90%;
+    color: #282c34;
+    margin: 5% 5%;
+    
+}
+
+#pic {
+    width: 40%;
+    margin: 1%;
+}
+
+
+@media only screen and (max-width: 600px) {
+    #collection {
+      display: block;
+    }
+    #card {
+        width: 90%;
+    }
+    #recipeCard {
+        width: 90%;
+        margin: 5%;
+    }
+    #pic {
+        width: 25%;
+        margin: 1%;
+    }
+  }
