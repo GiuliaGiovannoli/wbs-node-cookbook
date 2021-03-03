@@ -15,7 +15,7 @@ function RecipeCardsCollection({posts, onChangeSlug, addFavorites, ...props}) {
         <Box m={1} p={1} id="collection">
           {posts && posts.map((post) => {console.log(post)
            return (<Box p={1} id="card">
-                  <RecipeCard  key={post.fields.slug} post={post} onChangeSlug={onChangeSlug} addFavorites={addFavorites}/>
+                  <RecipeCard  key={post.slug} post={post} onChangeSlug={onChangeSlug} addFavorites={addFavorites}/>
             </Box> )})}
             </Box>
 
@@ -23,3 +23,5 @@ function RecipeCardsCollection({posts, onChangeSlug, addFavorites, ...props}) {
 }
 
 export default RecipeCardsCollection;
+
+

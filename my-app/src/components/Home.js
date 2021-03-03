@@ -8,19 +8,12 @@ import './comp-styles.css';
 
 
 export default (props, {onChangeSlug})=>{
-    console.log(props)
-    console.log(props.posts.length)
     const [randomNum, setRandomNum]= useState(0)
     const [time, setTime] = useState()
 
-    useEffect(()=> setRandomNum(Math.floor(Math.random() * (props.posts.length))),[])
+    // useEffect(()=> setRandomNum(Math.floor(Math.random() * (props.posts.length))),[])
 
-    useEffect(() => {
-        const intervalId = setInterval(() => {
-            setTime((prev) => prev + 1) 
-        }, 86400)
-        return () => {clearInterval(intervalId)}
-    }, [])
+
 
     return(
     <>
