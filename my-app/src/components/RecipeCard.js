@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Route, NavLink, Switch, Link } from "react-router-dom";
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -43,9 +43,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-
-
-
 function RecipeCard(props) {
   console.log(props.addFavorites)
   const classes = useStyles();
@@ -59,24 +56,27 @@ function RecipeCard(props) {
   //   setFavorite(!favorite)
   // }
   return (
-    <Card className={classes.root} id="recipe" key={props.post.fields.slug}>
+    <Card className={classes.root} id="recipe" key={props.post.slug}>
       <CardHeader id="recipeTitle"
-        title={props.post.fields.title}
+        title={props.post.title}
         subheader=""
       />
       <CardMedia
         className={classes.media}
-        image= {props.post.fields.image.fields.file.url}
+        image=""
         title=""
       />
       <CardContent>
+      <Typography variant="body2" color="textSecondary" component="p" id="recipeText">
+          <p>By {props.post.author}</p>
+        </Typography>
         <Typography variant="body2" color="textSecondary" component="p" id="recipeText">
-          <p>{props.post.fields.category}</p>
+          <p>{props.post.category}</p>
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">
-          <FavoriteIcon onClick={()=>props.addFavorites(props.post.fields.slug)} className={props.post.favorite? "heart": ""} />
+          <FavoriteIcon onClick={()=>props.addFavorites(props.post.slug)} className={props.post.favorite? "heart": ""} />
         </IconButton>
         <IconButton
           className={clsx(classes.expand, {
@@ -93,8 +93,8 @@ function RecipeCard(props) {
         <CardContent>
           <Typography paragraph>
           <div className="slug">
-          <Link className="link" to={`/recipes/RecipePage/${props.post.fields.slug}`} onClick={props.onChangeSlug}>
-          {props.post.fields.slug}
+          <Link className="link" to={`/recipes/RecipePage/${props.post.slug}`} onClick={props.onChangeSlug}>
+          {props.post.slug}
           </Link>
           </div>
           

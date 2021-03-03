@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Route, NavLink, Switch } from "react-router-dom"
 
 import './App.css';
@@ -13,8 +13,7 @@ import RecipeCardsCollection from "./components/RecipeCardsCollection";
 import Favorites from "./components/Favorites"
 
 import Logo from "./img/logo3.png"
-import { useState, useEffect } from 'react';
-import { client } from './client';
+
 
 function App() {
 
@@ -36,7 +35,7 @@ function App() {
   const addFavorite =(slug)=>{
     console.log(slug) 
     const newObjArr= posts.map((prevPost) => {
-          if (prevPost.fields.slug===slug){
+          if (prevPost.slug===slug){
             return { ...prevPost,
               favorite: !prevPost.favorite
             } 
@@ -54,31 +53,47 @@ function App() {
     setSlug(e.target.text)
 }
 
-  useEffect(() => {
-    client.getEntries(process.env.REACT_APP_SPACE_ID)
-    .then((response)=> 
-    {setPosts(response.items.map((post)=>({ ...post, favorite: false})));
-    console.log(posts)})
-    .catch(console.error)
-  }, [])
+//   useEffect(() => {
+//     client.getEntries(process.env.REACT_APP_SPACE_ID)
+//     .then((response)=> 
+//     {setPosts(response.items.map((post)=>({ ...post, favorite: false})));
+//     console.log(posts)})
+//     .catch(console.error)
+//   }, [])
 
-useEffect(()=> { 
-    client.getEntries({
-      'content_type': 'blogPost',
-      'fields.category' : category
-  })
-  .then((response) => {setCategoryResult(response.items.map((post)=>({ ...post, favorite: false})))})
-  .catch(console.error)
-},[category])
+// useEffect(()=> { 
+//     client.getEntries({
+//       'content_type': 'blogPost',
+//       'fields.category' : category
+//   })
+//   .then((response) => {setCategoryResult(response.items.map((post)=>({ ...post, favorite: false})))})
+//   .catch(console.error)
+// },[category])
 
-useEffect(()=> { 
-  client.getEntries({
-    'content_type': 'blogPost',
-    'fields.slug' : slug
-})
-.then((response) => {setSlugResult(response.items)})
-.catch(console.error)
-},[slug])
+// useEffect(()=> { 
+//   client.getEntries({
+//     'content_type': 'blogPost',
+//     'fields.slug' : slug
+// })
+// .then((response) => {setSlugResult(response.items)})
+// .catch(console.error)
+// },[slug])
+
+
+
+useEffect(() => {
+  fetch('http://localhost:4000/recipes')
+  .then(res => res.json())
+  .then(data => setPosts(data.map((post)=>({ ...post, favorite: false}))))
+}, [])
+
+/* useEffect(() => {
+  fetch('http://localhost:4000/recipes/')
+  .then(res => res.json())
+  .then(data => console.log(data));
+}, [slug]) */
+
+
 
 return (
      <>
@@ -92,16 +107,16 @@ return (
         to="/contact"  className="link"
       > Contact</NavLink>
       </nav>
+
       <Header />
       <Switch>
-            <Route path="/contact" component={Contact} />
+             <Route path="/contact" component={Contact} />
             <Route path="/recipes/RecipePage/:slug" render={(props)=> (slugResult? <RecipePage {...props} posts={slugResult} /> : <Spinner />)}/>
             <Route path="/recipes/RecipePage" component={RecipePage} />
             <Route path="/recipes/Favorites" render={(props) => (posts && posts.filter(post=>post.favorite).length >=1 ?  <RecipeCardsCollection {...props} posts={posts.filter(post=>post.favorite)} addFavorites={addFavorite}/> : <h2 className="container">Please choose some favorites first</h2>)} />
             <Route path="/recipes/:category" render={(props)=> (categoryResult?  <RecipeCardsCollection {...props} onChangeSlug={chooseSlug} posts={categoryResult} addFavorites={addFavorite} /> : <Spinner />)}/>
             <Route path="/recipes" render={(props) => (posts?  <RecipeCardsCollection {...props} posts={posts} onChangeSlug={chooseSlug} addFavorites={addFavorite}/> : <Spinner />)} />
-            <Route exact path="/" render={(props) => posts && <Home  {...props} onChangeCategory={chooseCategory} posts={posts} addFavorites={addFavorite} />}/>
-       
+            <Route exact path="/" render={(props) => posts && <Home  {...props} onChangeCategory={chooseCategory} posts={posts} addFavorites={addFavorite} />}/> 
       </Switch>
       <Favorites />
        <Footer />
@@ -110,3 +125,12 @@ return (
 }
 
 export default App;
+
+
+{/* <Route path="/contact" component={Contact} />
+            <Route path="/recipes/RecipePage/:slug" render={(props)=> (slugResult? <RecipePage {...props} posts={slugResult} /> : <Spinner />)}/>
+            <Route path="/recipes/RecipePage" component={RecipePage} />
+            <Route path="/recipes/Favorites" render={(props) => (posts && posts.filter(post=>post.favorite).length >=1 ?  <RecipeCardsCollection {...props} posts={posts.filter(post=>post.favorite)} addFavorites={addFavorite}/> : <h2 className="container">Please choose some favorites first</h2>)} />
+            <Route path="/recipes/:category" render={(props)=> (categoryResult?  <RecipeCardsCollection {...props} onChangeSlug={chooseSlug} posts={categoryResult} addFavorites={addFavorite} /> : <Spinner />)}/>
+            <Route path="/recipes" render={(props) => (posts?  <RecipeCardsCollection {...props} posts={posts} onChangeSlug={chooseSlug} addFavorites={addFavorite}/> : <Spinner />)} />
+            <Route exact path="/" render={(props) => posts && <Home  {...props} onChangeCategory={chooseCategory} posts={posts} addFavorites={addFavorite} />}/> */}

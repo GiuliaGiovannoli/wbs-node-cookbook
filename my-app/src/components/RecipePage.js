@@ -10,11 +10,12 @@ import Spinner from './Spinner';
 
 export default function RecipePage({posts}) {
 
+
   return (
     <>
           {posts && posts.map((post) => {
             return (
-                  <ActualRecipePage key={post.fields.slug} post={post} />
+                  <ActualRecipePage key={post.slug} post={post} />
           )})}
 </>
   )

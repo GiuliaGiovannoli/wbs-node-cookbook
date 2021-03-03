@@ -1,11 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useParams } from "react-router-dom"
 
 import './comp-styles.css';
-
-import * as contentful from 'contentful';
-import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
-import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
@@ -30,38 +26,38 @@ const useStyles = makeStyles({
   },
 });
 
+
 export default function ActualRecipePage(props) {
+
   const classes = useStyles();
 
-  const ing = documentToReactComponents(props.post.fields.ingredients)
 
   return (
-    <div id="recipeGrid" key={props.post.fields.slug}>
+    <div id="recipeGrid" key={props.post.slug}>
       <CardActionArea component="a" href="#">
         <Card className={classes.card} id="recipeCard">
           <div className={classes.cardDetails}>
             <CardContent>
               <Typography component="h2" variant="h5">
-                {props.post.fields.title}
+                {props.post.title}
               </Typography>
-              <Typography variant="subtitle1" id="recipeText" id="recipeText">
+              <Typography variant="subtitle1" id="recipeText">
               <br></br>
-                {props.post.fields.category}
+                {props.post.category}
               </Typography>
               <Typography variant="subtitle1" paragraph id="recipeText">
               <br></br>
               Ingredients:
-              Ingredients:
-              {ing}
+              {props.post.ingredients}
               </Typography>
               <Typography variant="subtitle1" id="recipeText">
               Method: 
               <br></br>
-              {props.post.fields.description}
+              {props.post.description}
               </Typography>
             </CardContent>
           </div>
-            <CardMedia className={classes.cardMedia} image={props.post.fields.image.fields.file.url} title="" id="pic"/>
+            <CardMedia className={classes.cardMedia} image="" title="" id="pic"/>
         </Card>
       </CardActionArea>
       </div>
