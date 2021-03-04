@@ -20,7 +20,6 @@ import './comp-styles.css';
 import RecipePage from './RecipePage';
 
 
-// Styling Card
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 345,
@@ -51,10 +50,11 @@ function RecipeCard(props) {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-  // const [favorite, setFavorite]= useState(false)
-  // const changeColor=()=>{
-  //   setFavorite(!favorite)
-  // }
+  const [favorite, setFavorite]= useState(false)
+  const changeColor=()=>{
+   setFavorite(!favorite)
+   }
+
   return (
     <Card className={classes.root} id="recipe" key={props.post.slug}>
       <CardHeader id="recipeTitle"

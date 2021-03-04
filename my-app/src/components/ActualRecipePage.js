@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Link, useParams } from "react-router-dom"
 
 import './comp-styles.css';
-
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -31,29 +30,41 @@ export default function ActualRecipePage(props) {
 
   const classes = useStyles();
 
+  const { slug } = useParams()
+
+  const [slugResult, setSlugResult]= useState()
+
+  useEffect(()=>{
+    if(slug){
+      fetch(`http://localhost:4000/recipes/slug/${slug}`)
+      .then(res => res.json())
+      .then (data => setSlugResult(data[0]))
+      .catch(e => console.log(e.message))
+    }
+  },[slug])
 
   return (
-    <div id="recipeGrid" key={props.post.slug}>
+    <div id="recipeGrid">
       <CardActionArea component="a" href="#">
         <Card className={classes.card} id="recipeCard">
           <div className={classes.cardDetails}>
             <CardContent>
               <Typography component="h2" variant="h5">
-                {props.post.title}
+                {slug ? slugResult && slugResult.title : props.post.title}
               </Typography>
               <Typography variant="subtitle1" id="recipeText">
               <br></br>
-                {props.post.category}
+                {slug ? slugResult && slugResult.category : props.post.category}
               </Typography>
               <Typography variant="subtitle1" paragraph id="recipeText">
               <br></br>
               Ingredients:
-              {props.post.ingredients}
+              {slug ? slugResult && slugResult.ingredients : props.post.ingredients}
               </Typography>
               <Typography variant="subtitle1" id="recipeText">
               Method: 
               <br></br>
-              {props.post.description}
+              {slug ? slugResult && slugResult.description : props.post.description}
               </Typography>
             </CardContent>
           </div>

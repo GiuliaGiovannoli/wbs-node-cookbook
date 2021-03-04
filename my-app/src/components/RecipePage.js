@@ -6,10 +6,7 @@ import RecipeCardsCollection from './RecipeCardsCollection';
 import Spinner from './Spinner';
 
 
-
-
 export default function RecipePage({posts}) {
-
 
   return (
     <>
