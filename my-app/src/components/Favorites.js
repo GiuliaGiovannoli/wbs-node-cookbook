@@ -8,7 +8,6 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 
 
-
 export default ()=>{
     return (
         <BottomNavigation value="" className="favorites-bar" >

@@ -7,8 +7,7 @@ import './comp-styles.css';
 import { getThemeProps } from '@material-ui/styles';
 
 
-
-function RecipeCardsCollection({posts, onChangeSlug, addFavorites, ...props}) {
+export default function RecipeCardsCollection({posts, onChangeSlug, addFavorites, ...props}) {
     
     return (
 
@@ -22,6 +21,6 @@ function RecipeCardsCollection({posts, onChangeSlug, addFavorites, ...props}) {
     )
 }
 
-export default RecipeCardsCollection;
+
 
 

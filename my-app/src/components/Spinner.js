@@ -11,6 +11,7 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
   
+  
 export default function LinearIndeterminate() {
     const classes = useStyles();
   

@@ -1,21 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from "react-router-dom"
+
 import RecipeCard from "./RecipeCard"
 import Box from '@material-ui/core/Box';
 import './comp-styles.css';
 
 
-
-
 export default (props, {onChangeSlug})=>{
+
     const [randomNum, setRandomNum]= useState(0)
-    const [time, setTime] = useState()
-
-    // useEffect(()=> setRandomNum(Math.floor(Math.random() * (props.posts.length))),[])
-
+    
+    useEffect(()=> setRandomNum(Math.floor(Math.random() * (props.posts.length))),[])
 
 
     return(
+
     <>
     <div className="home">
         <div className="container">
@@ -25,7 +24,6 @@ export default (props, {onChangeSlug})=>{
         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
     </div>
 
-        
     <div className="container" id="categories">
         <h2>OurCategories</h2>
         <div className="categories">

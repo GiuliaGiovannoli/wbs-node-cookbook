@@ -9,6 +9,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Home from "./components/Home";
 import Spinner from "./components/Spinner";
+import ActualRecipePage from './components/ActualRecipePage';
 import RecipeCardsCollection from "./components/RecipeCardsCollection";
 import Favorites from "./components/Favorites"
 
@@ -22,13 +23,10 @@ function App() {
   const [category, setCategory]= useState()
   const [favoritePosts, setFavoritePosts]= useState()
   const [favorite, setFavorite]= useState(false)
-   const [slugResult, setSlugResult]= useState()
   const [slug, setSlug]= useState()
   
-// filter through post with same id like click event
   const chooseCategory=(e)=>{
-        setCategory(e.target.text)
-  }
+        setCategory(e.target.text)}
 
   const addFavorite =(slug)=>{
     console.log(slug) 
@@ -86,15 +84,6 @@ useEffect(() => {
 }, [category])
 
 
-useEffect(()=>{
-  if(slug){
-    fetch(`http://localhost:4000/recipes/slug/${slug}`)
-    .then(res => res.json())
-    .then (data => setSlugResult(data))
-    .catch(e => console.log(e.message))
-  }
-},[slug])
-
 // useEffect(() => {
 //   if (category) {
 //     fetch(`http://localhost:4000/recipes/${category}`)
@@ -103,7 +92,6 @@ useEffect(()=>{
 //     .catch(e => console.log(e.message))
 //   }
 // }, [category]) 
-
 
 
 return (
@@ -121,8 +109,8 @@ return (
 
       <Header />
       <Switch>
-             <Route path="/contact" component={Contact} />
-            <Route path="/recipes/RecipePage/:slug" render={(props)=> (slugResult? <RecipePage {...props} posts={slugResult} /> : <Spinner />)}/>
+            <Route path="/contact" component={Contact} />
+            <Route path="/recipes/RecipePage/:slug" render={(props)=> <ActualRecipePage {...props} />}/>
             <Route path="/recipes/RecipePage" component={RecipePage} />
             <Route path="/recipes/Favorites" render={(props) => (posts && posts.filter(post=>post.favorite).length >=1 ?  <RecipeCardsCollection {...props} posts={posts.filter(post=>post.favorite)} addFavorites={addFavorite}/> : <h2 className="container">Please choose some favorites first</h2>)} />
             <Route path="/recipes/:category" render={(props)=> (posts?  <RecipeCardsCollection {...props} onChangeSlug={chooseSlug} posts={posts} addFavorites={addFavorite} /> : <Spinner />)}/>
@@ -130,18 +118,10 @@ return (
             <Route exact path="/" render={(props) => posts && <Home  {...props} onChangeCategory={chooseCategory} posts={posts} addFavorites={addFavorite} />}/> 
       </Switch>
       <Favorites />
-       <Footer />
+      <Footer />
   </>
   );
 }
 
 export default App;
 
-
-{/* <Route path="/contact" component={Contact} />
-            <Route path="/recipes/RecipePage/:slug" render={(props)=> (slugResult? <RecipePage {...props} posts={slugResult} /> : <Spinner />)}/>
-            <Route path="/recipes/RecipePage" component={RecipePage} />
-            <Route path="/recipes/Favorites" render={(props) => (posts && posts.filter(post=>post.favorite).length >=1 ?  <RecipeCardsCollection {...props} posts={posts.filter(post=>post.favorite)} addFavorites={addFavorite}/> : <h2 className="container">Please choose some favorites first</h2>)} />
-            <Route path="/recipes/:category" render={(props)=> (categoryResult?  <RecipeCardsCollection {...props} onChangeSlug={chooseSlug} posts={categoryResult} addFavorites={addFavorite} /> : <Spinner />)}/>
-            <Route path="/recipes" render={(props) => (posts?  <RecipeCardsCollection {...props} posts={posts} onChangeSlug={chooseSlug} addFavorites={addFavorite}/> : <Spinner />)} />
-            <Route exact path="/" render={(props) => posts && <Home  {...props} onChangeCategory={chooseCategory} posts={posts} addFavorites={addFavorite} />}/> */}
