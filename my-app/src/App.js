@@ -85,6 +85,16 @@ useEffect(() => {
   .catch(e => console.log(e.message))
 }, [category])
 
+
+useEffect(()=>{
+  if(slug){
+    fetch(`http://localhost:4000/recipes/slug/${slug}`)
+    .then(res => res.json())
+    .then (data => setSlugResult(data))
+    .catch(e => console.log(e.message))
+  }
+},[slug])
+
 // useEffect(() => {
 //   if (category) {
 //     fetch(`http://localhost:4000/recipes/${category}`)

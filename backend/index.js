@@ -26,14 +26,14 @@ app.get('/recipes/:category', (req, res) => {
         text: "SELECT * FROM Recipes WHERE lower(category) LIKE $1",
         values: [`%${category.toLowerCase()}%`]
     }
-console.log('I m here')
+
     pool.query(findByCategory)
     .then(data => res.status(201).json(data.rows))
     .catch(e => res.status(500).send(e.message))
 })
 
 //recipes/slug/:slug
-app.get('/recipes/:slug', (req, res)=>{
+app.get('/recipes/slug/:slug', (req, res)=>{
     const {slug} = req.params;
     pool.query('SELECT * FROM Recipes WHERE slug=$1 ORDER BY slug', [slug])
     .then((data)=> res.json(data.rows))
