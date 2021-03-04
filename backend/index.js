@@ -17,9 +17,25 @@ const pool = new Pool({
 })
 
 
+
+// select * from users where lower(first_name) like '%al%';
+app.get('/recipes/:category', (req, res) => {
+    const { category } = req.params
+
+    const findByCategory = {
+        text: "SELECT * FROM Recipes WHERE lower(category) LIKE $1",
+        values: [`%${category.toLowerCase()}%`]
+    }
+console.log('I m here')
+    pool.query(findByCategory)
+    .then(data => res.status(201).json(data.rows))
+    .catch(e => res.status(500).send(e.message))
+})
+
+//recipes/slug/:slug
 app.get('/recipes/:slug', (req, res)=>{
     const {slug} = req.params;
-    pool.query('SELECT * FROM Recipes WHERE slug=$1', [slug])
+    pool.query('SELECT * FROM Recipes WHERE slug=$1 ORDER BY slug', [slug])
     .then((data)=> res.json(data.rows))
     .catch((err)=> res.sendStatus(500))
 })

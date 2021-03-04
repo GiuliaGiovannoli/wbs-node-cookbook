@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Route, NavLink, Switch } from "react-router-dom"
 
 import './App.css';
@@ -26,8 +26,6 @@ function App() {
   const [slug, setSlug]= useState()
   
 // filter through post with same id like click event
-
-
   const chooseCategory=(e)=>{
         setCategory(e.target.text)
   }
@@ -80,18 +78,21 @@ function App() {
 // },[slug])
 
 
-
 useEffect(() => {
-  fetch('http://localhost:4000/recipes')
+  fetch(`http://localhost:4000/recipes${category ? `/${category}` : ""}`)
   .then(res => res.json())
   .then(data => setPosts(data.map((post)=>({ ...post, favorite: false}))))
-}, [])
+  .catch(e => console.log(e.message))
+}, [category])
 
-/* useEffect(() => {
-  fetch('http://localhost:4000/recipes/')
-  .then(res => res.json())
-  .then(data => console.log(data));
-}, [slug]) */
+// useEffect(() => {
+//   if (category) {
+//     fetch(`http://localhost:4000/recipes/${category}`)
+//     .then(res => res.json())
+//     .then(data => setPosts(data.map((post)=>({ ...post, favorite: false}))))
+//     .catch(e => console.log(e.message))
+//   }
+// }, [category]) 
 
 
 
@@ -114,7 +115,7 @@ return (
             <Route path="/recipes/RecipePage/:slug" render={(props)=> (slugResult? <RecipePage {...props} posts={slugResult} /> : <Spinner />)}/>
             <Route path="/recipes/RecipePage" component={RecipePage} />
             <Route path="/recipes/Favorites" render={(props) => (posts && posts.filter(post=>post.favorite).length >=1 ?  <RecipeCardsCollection {...props} posts={posts.filter(post=>post.favorite)} addFavorites={addFavorite}/> : <h2 className="container">Please choose some favorites first</h2>)} />
-            <Route path="/recipes/:category" render={(props)=> (categoryResult?  <RecipeCardsCollection {...props} onChangeSlug={chooseSlug} posts={categoryResult} addFavorites={addFavorite} /> : <Spinner />)}/>
+            <Route path="/recipes/:category" render={(props)=> (posts?  <RecipeCardsCollection {...props} onChangeSlug={chooseSlug} posts={posts} addFavorites={addFavorite} /> : <Spinner />)}/>
             <Route path="/recipes" render={(props) => (posts?  <RecipeCardsCollection {...props} posts={posts} onChangeSlug={chooseSlug} addFavorites={addFavorite}/> : <Spinner />)} />
             <Route exact path="/" render={(props) => posts && <Home  {...props} onChangeCategory={chooseCategory} posts={posts} addFavorites={addFavorite} />}/> 
       </Switch>
