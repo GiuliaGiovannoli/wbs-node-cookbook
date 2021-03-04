@@ -6,7 +6,6 @@ import App from './App';
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-console.log(process.env)
 
 ReactDOM.render(
  
