@@ -16,7 +16,14 @@ const pool = new Pool({
     port: process.env.PGPORT
 })
 
-
+app.post('/recipes', (req, res) => {
+    const recipes = {
+        text: `INSERT INTO Recipes (picture) VALUES ($1) RETURNING *`,
+        values: []
+    }
+    pool.query(recipes).then((data) => res.json(data))
+    .catch((err)=> res.sendStatus(500))
+})
 
 // select * from users where lower(first_name) like '%al%';
 app.get('/recipes/:category', (req, res) => {

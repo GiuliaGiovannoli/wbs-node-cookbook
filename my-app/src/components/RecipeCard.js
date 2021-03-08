@@ -55,6 +55,13 @@ function RecipeCard(props) {
    setFavorite(!favorite)
    }
 
+   const [image, setImage] = useState()
+   useEffect(() => {
+    fetch(`http://localhost:4000/${props.post.slug}.png`)
+    .then(res => setImage(res.url))
+  })
+
+
   return (
     <Card className={classes.root} id="recipe" key={props.post.slug}>
       <CardHeader id="recipeTitle"
@@ -63,7 +70,7 @@ function RecipeCard(props) {
       />
       <CardMedia
         className={classes.media}
-        image=""
+        image={image}
         title=""
       />
       <CardContent>

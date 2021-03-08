@@ -11,6 +11,7 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Hidden from '@material-ui/core/Hidden';
+import { SettingsSystemDaydreamTwoTone } from '@material-ui/icons';
 
 
 const useStyles = makeStyles({
@@ -30,9 +31,11 @@ export default function ActualRecipePage(props) {
 
   const classes = useStyles();
 
+
   const { slug } = useParams()
 
   const [slugResult, setSlugResult]= useState()
+  const [image, setImage] = useState()
 
   useEffect(()=>{
     if(slug){
@@ -42,6 +45,12 @@ export default function ActualRecipePage(props) {
       .catch(e => console.log(e.message))
     }
   },[slug])
+
+  useEffect(() => {
+    fetch(`http://localhost:4000/${slug}.png`)
+    .then(res => setImage(res.url))
+  })
+
 
   return (
     <div id="recipeGrid">
@@ -68,9 +77,14 @@ export default function ActualRecipePage(props) {
               </Typography>
             </CardContent>
           </div>
-            <CardMedia className={classes.cardMedia} image="" title="" id="pic"/>
+            <CardMedia className={classes.cardMedia} image={image} title="" id="pic">
+            </CardMedia>
         </Card>
       </CardActionArea>
+
+      
       </div>
+
+
   );
 }
